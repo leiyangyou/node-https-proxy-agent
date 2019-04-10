@@ -228,15 +228,16 @@ describe('HttpsProxyAgent', function () {
     });
 
     it('should allow custom proxy "headers"', function (done) {
-      server.once('connect', function (req, socket, head) {
+      sslServer.once('connect', function (req, socket, head) {
         assert.equal('CONNECT', req.method);
         assert.equal('bar', req.headers.foo);
         socket.destroy();
         done();
       });
 
-      var uri = 'http://127.0.0.1:' + serverPort;
-      var proxyOpts = url.parse(uri);
+      var proxy = 'https://127.0.0.1:' + sslServerPort;
+      var proxyOpts = url.parse(proxy);
+      proxyOpts.rejectUnauthorized = false;
       proxyOpts.headers = {
         'Foo': 'bar'
       };

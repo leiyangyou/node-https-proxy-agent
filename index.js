@@ -6,6 +6,7 @@ var net = require('net');
 var tls = require('tls');
 var url = require('url');
 var Agent = require('agent-base');
+var HttpProxyAgent = require('http-proxy-agent');
 var inherits = require('util').inherits;
 var debug = require('debug')('https-proxy-agent');
 
@@ -69,6 +70,10 @@ inherits(HttpsProxyAgent, Agent);
 HttpsProxyAgent.prototype.callback = function connect(req, opts, fn) {
   var proxy = this.proxy;
 
+  if (opts.protocol === 'http:') {
+    return HttpProxyAgent.prototype.callback.call(this, req, opts, fn)
+  }
+  
   // create a socket connection to the proxy server
   var socket;
   if (this.secureProxy) {

@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "agent-base": "^4.2.0",
-    "debug": "^3.1.0"
+    "debug": "^3.1.0",
+    "http-proxy-agent": "^2.1.0"
   },
   "devDependencies": {
     "mocha": "^3.4.2",
